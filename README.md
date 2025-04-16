@@ -95,6 +95,8 @@ Do **not** use `while`, `sum`, `map`, `lambda`, `def`, `return`, `try`, `except`
 
 ### Sample Input Output 입출력 예
 
+#### Three pairs 3 행 입력 예
+
 ```
 Enter number of force-distance pairs (1 to 10): 3
 ==========
@@ -117,6 +119,26 @@ Index |  Force(N)  |Distance(m) |Work Done(J)
      2|        4.00|       -3.00|      -12.00
 ==========
 Total work done = 1.50 J
+```
+
+#### One pair 1 행 입력 예
+
+```
+Enter number of force-distance pairs (1 to 10): 1
+==========
+Expected number of force-distance pairs: 1
+==========
+Enter force[0] in Newtons: 20.0
+Enter distance[0] in meters: 5.0
+==========
+Collected forces (N): [20.0]
+Collected distances (m): [5.0]
+Calculated work done (J): [100.0]
+==========
+Index |  Force(N)  |Distance(m) |Work Done(J)
+     0|       20.00|        5.00|      100.00
+==========
+Total work done = 100.00 J
 ```
 
 ## Tips 힌트
