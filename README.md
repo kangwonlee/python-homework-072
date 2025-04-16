@@ -18,8 +18,8 @@ Write a Python program that:<br>다음 작업을 수행하는 Python 프로그�
 Use only Python constructs covered in class: `print`, `input`, `if`, `for`, `list`, and f-strings.\
 강의에서 다룬 Python 구조만 사용하세요: `print`, `input`, `if`, `for`, `list`, f-문자열.
 
-Do **not** use `while`, `map`, `lambda`, `def`, `return`, `try`, `except`, or file I/O.\
-`while`, `map`, `lambda`, `def`, `return`, `try`, `except`, 파일 입출력은 사용하면 **안됩니다**.
+Do **not** use `while`, `sum`, `map`, `lambda`, `def`, `return`, `try`, `except`, or file I/O.\
+`while`, `sum`, `map`, `lambda`, `def`, `return`, `try`, `except`, 파일 입출력은 사용하면 **안됩니다**.
 
 ## Input Output Specification 입출력 명세
 
@@ -58,11 +58,19 @@ Do **not** use `while`, `map`, `lambda`, `def`, `return`, `try`, `except`, or fi
 
 * Partition 파티션 : print `==========` 출력
 
-* **Collected lists** **입력된 리스트**: After collecting inputs, print lists<br>입력값을 저장한 `list` 출력: 
+* Calculate the work done for each pair and store in `work_done_J`.<br>모든 `i`에 대해 `i`번째 힘이 한 일을 계산하여 `work_done_J`에 저장.
+
+    ``` python
+    work_done_J[i] = forces_N[i] * distances_m[i]
+    ```
+
+
+* After collecting inputs and calculating work done values, print lists<br>입력값을 모두 받고, 힘이 한 일 값을 모두 계산한 후 `list` 출력:
 
    ```
    Collected forces (N): {forces_N}
    Collected distances (m): {distances_m}
+   Calculated work done (J): {work_done_J}
    ```
 
 * Partition 파티션 : print `==========` 출력
@@ -75,7 +83,7 @@ Do **not** use `while`, `map`, `lambda`, `def`, `return`, `try`, `except`, or fi
 
 * Print the collected forces and distances with their respective indices.<br>저장된 힘과 거리, 인덱스 출력
    - Use right-aligned formatting with 2 decimal places for floats.<br>실수는 소수점 이하 2자리로 오른쪽 정렬
-   - Example f-string for a table row 표 행 예시 f-문자열:<br>`f'{i:6d}|{forces_N[i]:12.2f}|{distances_m[i]:12.2f}|{forces_N[i] * distances_m[i]:12.2f}'`
+   - Example f-string for a table row 표 행 예시 f-문자열:<br>`f'{i:6d}|{forces_N[i]:12.2f}|{distances_m[i]:12.2f}|{work_done_J[i]:12.2f}'`
 
 * Partition 파티션 : print `==========` 출력
 
@@ -101,6 +109,7 @@ Enter distance[2] in meter = -3.0
 ==========
 Collected forces (N): [10.5, -5.0, 8.0]
 Collected distances (m): [2.0, 1.5, -3.0]
+Calculated work done (J): [21.0, -7.5, -24.0]
 ==========
 Index |  Force(N)  |Distance(m) |Work Done(J)
      0|       10.50|        2.00|       21.00
