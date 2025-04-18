@@ -106,10 +106,10 @@ Enter force[0] in Newton = 10.5
 Enter distance[0] in meter = 2.0
 Enter force[1] in Newton = -5.0
 Enter distance[1] in meter = 1.5
-Enter force[2] in Newton = 8.0
+Enter force[2] in Newton = 4.0
 Enter distance[2] in meter = -3.0
 ==========
-Collected forces (N): [10.5, -5.0, 8.0]
+Collected forces (N): [10.5, -5.0, 4.0]
 Collected distances (m): [2.0, 1.5, -3.0]
 Calculated work done (J): [21.0, -7.5, -24.0]
 ==========
