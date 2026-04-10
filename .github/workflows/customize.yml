@@ -1,0 +1,71 @@
+# begin .github/workflows/customize.yml
+# Self-destructing workflow: customizes classroom.yml for the forking org.
+#
+# When this repo is forked to a section org, this workflow:
+#   1. Checks out the fork
+#   2. Rewrites the workflows-central reference to use the fork's org
+#   3. Removes this file (self-destruct)
+#   4. Commits and pushes to the fork
+#
+# Prerequisites:
+#   secrets.BUILDER_PAT — PAT with repo + workflow scope for section org repos
+#
+# Security: repo is private, so only authorized users can fork.
+
+name: Customize fork
+on: fork
+
+jobs:
+  customize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        id: checkout
+        continue-on-error: true
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ github.event.forkee.full_name }}
+          token: ${{ secrets.BUILDER_PAT }}
+
+      - name: Report checkout failure
+        if: steps.checkout.outcome == 'failure'
+        run: |
+          echo "## Checkout FAILED" >> $GITHUB_STEP_SUMMARY
+          echo "Cannot access \`${{ github.event.forkee.full_name }}\`." >> $GITHUB_STEP_SUMMARY
+          echo "Check that \`BUILDER_PAT\` has \`repo\` + \`workflow\` scope for \`${{ github.event.forkee.owner.login }}\`." >> $GITHUB_STEP_SUMMARY
+          exit 1
+
+      - name: Customize and self-destruct
+        env:
+          ORG: ${{ github.event.forkee.owner.login }}
+        run: |
+          sed -i "s|[a-zA-Z0-9_-]*/workflows-central|${ORG}/workflows-central|g" \
+            .github/workflows/classroom.yml
+          rm .github/workflows/customize.yml
+
+          echo "## Fork customized" >> $GITHUB_STEP_SUMMARY
+          echo "- Org: \`${ORG}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- classroom.yml → \`${ORG}/workflows-central\`" >> $GITHUB_STEP_SUMMARY
+          echo "- customize.yml removed" >> $GITHUB_STEP_SUMMARY
+
+      - name: Commit and push
+        id: push
+        continue-on-error: true
+        env:
+          ORG: ${{ github.event.forkee.owner.login }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Customize for ${ORG}"
+          git push
+
+      - name: Report push failure
+        if: steps.push.outcome == 'failure'
+        run: |
+          echo "## Push FAILED" >> $GITHUB_STEP_SUMMARY
+          echo "PAT lacks write access to \`${{ github.event.forkee.full_name }}\`." >> $GITHUB_STEP_SUMMARY
+          echo "Check \`BUILDER_PAT\` permissions (\`repo\` + \`workflow\` scope)." >> $GITHUB_STEP_SUMMARY
+          exit 1
+
+# end .github/workflows/customize.yml
